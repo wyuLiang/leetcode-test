@@ -2,26 +2,25 @@
 
 // 带备忘录的暴力搜索法
 const wordBreak = (s, wordDict) => {
-    const $wordBreak = (str, begin, end) => {
-        if(!str.length) { dp[begin][end] = true; return true }
-        if(dp[begin][end] === false) return false;
-        if(dp[begin][end] === true) return true;
+    if(!s.length) return true;
+    let dp = [];
+    for(let i = 0; i <= s.length; i++) dp[i] = [];
+    return $wordBreak(s, 0, s.length);
+    function $wordBreak(str, begin, end) {
         for(let word of wordDict){
             let idx = str.indexOf(word);
             if(idx === -1) continue;
             let mBegin = begin + idx;
             let mEnd = mBegin + word.length;
             dp[mBegin][mEnd] = true;
-            let a = $wordBreak(str.slice(0, idx), begin, mBegin);
-            let b = $wordBreak(str.slice(idx + word.length), mEnd, end);
-            if(a && b) { dp[begin][end] = true; return true; }
+            if(dp[begin][mBegin] === undefined) dp[begin][mBegin] = begin === mBegin || $wordBreak(str.slice(0, idx), begin, mBegin);
+            if(dp[mEnd][end] === undefined) dp[mEnd][end] = mEnd === end || $wordBreak(str.slice(idx + word.length), mEnd, end);
+            dp[begin][end] = dp[begin][mBegin] && dp[mEnd][end];
+            if(dp[begin][end]) return true;
         }
         dp[begin][end] = false;
         return false;
-    };
-    let dp = [];
-    for(let i = 0; i <= s.length; i++) dp[i] = [];
-    return $wordBreak(s, 0, s.length);
+    }
 };
 
 
