@@ -1,7 +1,4 @@
-/*
-    AC
-    https://leetcode.com/problems/merge-intervals/
- */
+//AC https://leetcode.com/problems/merge-intervals/
 
 /*
     @param {number[][]} intervals

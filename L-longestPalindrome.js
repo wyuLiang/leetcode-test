@@ -1,7 +1,4 @@
-/*
-    AC
-    https://leetcode-cn.com/problems/longest-palindromic-substring/
- */
+//AC https://leetcode-cn.com/problems/longest-palindromic-substring/
 
 /**
  * Manacher算法；O(n) = n;
