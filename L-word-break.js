@@ -1,4 +1,4 @@
-// https://leetcode-cn.com/problems/word-break/
+// AC https://leetcode-cn.com/problems/word-break/
 
 // 带备忘录的暴力搜索法
 const wordBreak = (s, wordDict) => {
@@ -23,6 +23,24 @@ const wordBreak = (s, wordDict) => {
     }
 };
 
+// DP
+// dp[i] 表示字符串s(0,i)能否拆分
+// s(0, i) = s(0, j) && wordDict.indexOf(sub(i-j)) !== -1 其中 j >= 0 && j < i;
+const wordBreak1 = (s, wordDict) => {
+    if(!s.length) return true;
+    let dp = [true];        //初始化dp[0]
+    for(let i = 1; i <= s.length; i++){
+        for(let j = 0; j < i; j++){
+            if(dp[j] && wordDict.indexOf(s.slice(j, i)) !== -1){
+                dp[i] = true;
+                break;
+            }
+            dp[i] = false;
+        }
+    }
+    return dp[dp.length - 1]
+};
+
 
 let tests = [
     ['leetcodes', ['ee', 'e', 'lt', 'code', 's'], false]
@@ -36,4 +54,5 @@ let tests = [
 const assert = require('assert');
 for(let [s, wordDict, res] of tests){
     assert.equal(wordBreak(s, wordDict), res);
+    assert.equal(wordBreak1(s, wordDict), res);
 }
