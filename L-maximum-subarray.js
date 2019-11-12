@@ -17,12 +17,12 @@ const maxSubArray = nums => {
 };
 
 // DP O(n)
-// max[i]: 表示以第i个元素结尾且和最大的连续子数组
-// max[i] = max(max[i - 1] + a[i], a[i]);
+// dp[i]: 表示以第i个元素结尾且和最大的连续子数组
+// dp[i] = dp(dp[i - 1] + nums[i], nums[i]);
 
 const maxSubArray1 = nums => {
     let dp = [nums[0]];
-    let max = nums[0];
+    let max = nums[0];                              //这里的max只是用于取dp[]中最大值
     for(let i = 1; i < nums.length; i++){
         dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
         if(dp[i] > max) max = dp[i];
@@ -31,6 +31,7 @@ const maxSubArray1 = nums => {
 };
 
 // DP 优化，减少内存消耗
+// 因为 dp[] 只需要取得最大的 且 当sum<=0时，sum = next； 当sum>0时，则继续sum+=next
 const maxSubArray2 = nums => {
     let sum = nums[0];
     let dp = nums[0];
