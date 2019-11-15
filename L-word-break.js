@@ -2,23 +2,24 @@
 
 // 带备忘录的暴力搜索法
 const wordBreak = (s, wordDict) => {
-    if(!s.length) return true;
-    let dp = [];
-    for(let i = 0; i <= s.length; i++) dp[i] = [];
+    let memo = [];                                      //memo[i][j]表示 s.slice(i, j)能否拆分； undefined时表示未计算；
+    for(let i = 0; i <= s.length; i++) memo[i] = [];
     return $wordBreak(s, 0, s.length);
-    function $wordBreak(str, begin, end) {
+
+    //这里的i、j、mi、mj 是s的下标，不是sub的下标
+    function $wordBreak(sub, i, j) {
+        if(i === j) { memo[i][j] = true; return true; } //sub为空，memo[i][j]为true
+        if(memo[i][j] !== undefined) { return memo[i][j]; }
         for(let word of wordDict){
-            let idx = str.indexOf(word);
+            let idx = sub.indexOf(word);
             if(idx === -1) continue;
-            let mBegin = begin + idx;
-            let mEnd = mBegin + word.length;
-            dp[mBegin][mEnd] = true;
-            if(dp[begin][mBegin] === undefined) dp[begin][mBegin] = begin === mBegin || $wordBreak(str.slice(0, idx), begin, mBegin);
-            if(dp[mEnd][end] === undefined) dp[mEnd][end] = mEnd === end || $wordBreak(str.slice(idx + word.length), mEnd, end);
-            dp[begin][end] = dp[begin][mBegin] && dp[mEnd][end];
-            if(dp[begin][end]) return true;
+            let mi = i + idx;
+            let mj = mi + word.length;
+            memo[mi][mj] = true;
+            memo[i][j] = $wordBreak(sub.slice(0, idx), i, mi) && $wordBreak(sub.slice(idx + word.length), mj, j);
+            if(memo[i][j]) return true;
         }
-        dp[begin][end] = false;
+        memo[i][j] = false;
         return false;
     }
 };
@@ -38,7 +39,7 @@ const wordBreak1 = (s, wordDict) => {
             dp[i] = false;
         }
     }
-    return dp[dp.length - 1]
+    return dp[dp.length - 1];
 };
 
 
@@ -56,3 +57,11 @@ for(let [s, wordDict, res] of tests){
     assert.equal(wordBreak(s, wordDict), res);
     assert.equal(wordBreak1(s, wordDict), res);
 }
+
+
+console.log(new Date(1545622932713));
+console.log(1545622932713 + 3600 * 24 * 30 * 1000);
+console.log(new Date(1545622932713 + 3600 * 24 * 30 * 1000));
+console.log(130000 + 1000000 + 49992384 +38000000 + 9878534 + 24914750 + 31736500);
+console.log(1548064698839 > 1548063551017)
+154652168
