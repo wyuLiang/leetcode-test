@@ -22,7 +22,7 @@ const preorderTraversal = (root, traversal = []) => {
     return traversal;
 };
 
-//归纳算法
+//迭代算法
 
 const preorderTraversal1 = root => {
     let traversal = [];

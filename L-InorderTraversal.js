@@ -19,7 +19,7 @@ const inorderTraversal = (root, ary = []) => {
     return ary;
 };
 
-// 归纳做法
+// 迭代做法
 
 const inorderTraversal1 = root => {
     let stack = [];
